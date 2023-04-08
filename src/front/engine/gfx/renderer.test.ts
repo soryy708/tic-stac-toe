@@ -48,6 +48,16 @@ describe('Renderer', () => {
             }
         };
 
+        function expectCanvasWidth(expectedWidth: number): void {
+            expect(mockCanvas.width).toBe(expectedWidth);
+            expect(mockCanvas.style.width).toBe(`${expectedWidth}px`);
+        }
+
+        function expectCanvasHeight(expectedHeight: number): void {
+            expect(mockCanvas.height).toBe(expectedHeight);
+            expect(mockCanvas.style.height).toBe(`${expectedHeight}px`);
+        }
+
         describe('When resized to landscape resolution', () => {
             describe('When too wide', () => {
                 beforeEach(() => {
@@ -55,11 +65,11 @@ describe('Renderer', () => {
                 });
 
                 it('Should crop width', () => {
-                    expect(mockCanvas.width).toBe(16);
+                    expectCanvasWidth(16);
                 });
 
                 it('Should have maximum height', () => {
-                    expect(mockCanvas.height).toBe(9);
+                    expectCanvasHeight(9);
                 });
             });
 
@@ -69,13 +79,11 @@ describe('Renderer', () => {
                 });
 
                 it('Should have maximum width', () => {
-                    expect(mockCanvas.width).toBe(15);
+                    expectCanvasWidth(15);
                 });
 
                 it('Should crop height', () => {
-                    expect(mockCanvas.height).toBe(
-                        Math.floor(15 / aspectRatio),
-                    );
+                    expectCanvasHeight(Math.floor(15 / aspectRatio));
                 });
             });
 
@@ -85,13 +93,11 @@ describe('Renderer', () => {
                 });
 
                 it('Should have maximum width', () => {
-                    expect(mockCanvas.width).toBe(16);
+                    expectCanvasWidth(16);
                 });
 
                 it('Should crop height', () => {
-                    expect(mockCanvas.height).toBe(
-                        Math.floor(16 / aspectRatio),
-                    );
+                    expectCanvasHeight(Math.floor(16 / aspectRatio));
                 });
             });
 
@@ -101,11 +107,11 @@ describe('Renderer', () => {
                 });
 
                 it('Should have maximum width', () => {
-                    expect(mockCanvas.width).toBe(Math.floor(8 * aspectRatio));
+                    expectCanvasWidth(Math.floor(8 * aspectRatio));
                 });
 
                 it('Should crop height', () => {
-                    expect(mockCanvas.height).toBe(8);
+                    expectCanvasHeight(8);
                 });
             });
         });
@@ -117,11 +123,11 @@ describe('Renderer', () => {
                 });
 
                 it('Should crop width', () => {
-                    expect(mockCanvas.width).toBe(Math.floor(16 / aspectRatio));
+                    expectCanvasWidth(Math.floor(16 / aspectRatio));
                 });
 
                 it('Should have maximum height', () => {
-                    expect(mockCanvas.height).toBe(16);
+                    expectCanvasHeight(16);
                 });
             });
 
@@ -131,11 +137,11 @@ describe('Renderer', () => {
                 });
 
                 it('Should have maximum width', () => {
-                    expect(mockCanvas.width).toBe(8);
+                    expectCanvasWidth(8);
                 });
 
                 it('Should crop height', () => {
-                    expect(mockCanvas.height).toBe(Math.floor(8 * aspectRatio));
+                    expectCanvasHeight(Math.floor(8 * aspectRatio));
                 });
             });
 
@@ -145,11 +151,11 @@ describe('Renderer', () => {
                 });
 
                 it('Should have maximum width', () => {
-                    expect(mockCanvas.width).toBe(9);
+                    expectCanvasWidth(9);
                 });
 
                 it('Should crop height', () => {
-                    expect(mockCanvas.height).toBe(Math.floor(9 * aspectRatio));
+                    expectCanvasHeight(Math.floor(9 * aspectRatio));
                 });
             });
 
@@ -159,11 +165,11 @@ describe('Renderer', () => {
                 });
 
                 it('Should crop width', () => {
-                    expect(mockCanvas.width).toBe(Math.floor(15 / aspectRatio));
+                    expectCanvasWidth(Math.floor(15 / aspectRatio));
                 });
 
                 it('Should have maximum height', () => {
-                    expect(mockCanvas.height).toBe(15);
+                    expectCanvasHeight(15);
                 });
             });
         });

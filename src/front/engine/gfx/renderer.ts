@@ -92,5 +92,8 @@ export class Renderer {
 
         this.canvas.width = width;
         this.canvas.height = height;
+        // We set `style` as well, because ThreeJS uses it
+        this.canvas.style.width = `${width}px`;
+        this.canvas.style.height = `${height}px`;
     }
 }
