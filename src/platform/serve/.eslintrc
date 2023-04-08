@@ -1,0 +1,9 @@
+{
+    "parserOptions": {
+        "plugins": ["node"]
+    },
+    "extends": ["plugin:node/recommended"],
+    "env": {
+        "node": true
+    }
+}

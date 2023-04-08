@@ -1,0 +1,13 @@
+{
+    "parserOptions": {
+        "plugins": ["node"]
+    },
+    "extends": ["plugin:node/recommended"],
+    "env": {
+        "node": true
+    },
+    "rules": {
+        "no-sync": "off",
+        "node/no-unpublished-require": "off"
+    }
+}
