@@ -63,32 +63,7 @@ export class Renderer {
     }
 
     private onWindowResize() {
-        let width = NaN;
-        let height = NaN;
-        const landscape = this.window.innerWidth > this.window.innerHeight;
-        if (landscape) {
-            if (
-                this.window.innerWidth <
-                this.window.innerHeight * aspectRatio
-            ) {
-                width = this.window.innerWidth;
-                height = width / aspectRatio;
-            } else {
-                height = this.window.innerHeight;
-                width = height * aspectRatio;
-            }
-        } /* portrait */ else {
-            if (
-                this.window.innerHeight <
-                this.window.innerWidth * aspectRatio
-            ) {
-                height = this.window.innerHeight;
-                width = height / aspectRatio;
-            } else {
-                width = this.window.innerWidth;
-                height = width * aspectRatio;
-            }
-        }
+        let { width, height } = this.dimensions();
 
         width = Math.floor(width);
         height = Math.floor(height);
@@ -98,5 +73,40 @@ export class Renderer {
         // We set `style` as well, because ThreeJS uses it
         this.canvas.style.width = `${width}px`;
         this.canvas.style.height = `${height}px`;
+    }
+
+    private dimensions(): { width: number; height: number } {
+        const landscape = this.window.innerWidth > this.window.innerHeight;
+        return landscape
+            ? this.landscapeDimensions()
+            : this.portraitDimensions();
+    }
+
+    private landscapeDimensions(): { width: number; height: number } {
+        const maxWidth =
+            this.window.innerWidth < this.window.innerHeight * aspectRatio;
+        return maxWidth
+            ? {
+                  width: this.window.innerWidth,
+                  height: this.window.innerWidth / aspectRatio,
+              }
+            : {
+                  height: this.window.innerHeight,
+                  width: this.window.innerHeight * aspectRatio,
+              };
+    }
+
+    private portraitDimensions(): { width: number; height: number } {
+        const maxHeight =
+            this.window.innerHeight < this.window.innerWidth * aspectRatio;
+        return maxHeight
+            ? {
+                  height: this.window.innerHeight,
+                  width: this.window.innerHeight / aspectRatio,
+              }
+            : {
+                  width: this.window.innerWidth,
+                  height: this.window.innerWidth * aspectRatio,
+              };
     }
 }
