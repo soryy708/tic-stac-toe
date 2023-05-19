@@ -62,6 +62,14 @@ export class Renderer {
         this.threeRenderer.render(this.scene.getInternal(), this.threeCamera);
     }
 
+    getInternal(): WebGLRenderer {
+        return this.threeRenderer;
+    }
+
+    getInternalCamera(): ThreeCamera {
+        return this.threeCamera;
+    }
+
     private onWindowResize() {
         let { width, height } = this.dimensions();
 
@@ -73,6 +81,9 @@ export class Renderer {
         // We set `style` as well, because ThreeJS uses it
         this.canvas.style.width = `${width}px`;
         this.canvas.style.height = `${height}px`;
+
+        this.threeCamera.updateProjectionMatrix();
+        this.threeRenderer.setSize(width, height);
     }
 
     private dimensions(): { width: number; height: number } {

@@ -18,12 +18,12 @@ export class Engine {
     private lastIterationTime: number;
 
     constructor(
-        browserContext: BrowserContext,
+        private browserContext: BrowserContext,
         private options: EngineOptions,
     ) {
         this.renderer = new Renderer(
-            browserContext.canvas,
-            browserContext.window,
+            this.browserContext.canvas,
+            this.browserContext.window,
             this.scene,
         );
     }
@@ -44,6 +44,7 @@ export class Engine {
         return {
             renderer: this.renderer,
             scene: this.scene,
+            canvas: this.browserContext.canvas,
         };
     }
 

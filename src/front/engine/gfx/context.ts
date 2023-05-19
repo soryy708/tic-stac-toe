@@ -4,4 +4,5 @@ import { GraphicsScene } from './scene';
 export type RendererContext = {
     scene: GraphicsScene;
     renderer: Renderer;
+    canvas: HTMLCanvasElement;
 };
