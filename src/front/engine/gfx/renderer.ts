@@ -34,6 +34,7 @@ export class Renderer {
         const directionalLight = new DirectionalLight(0xffffff, 0.5);
         directionalLight.position.x = 1;
         directionalLight.position.y = 1;
+        directionalLight.position.z = 1;
         this.scene.getInternal().add(directionalLight);
         const ambientLight = new AmbientLight(0xffffff, 0.25);
         this.scene.getInternal().add(ambientLight);
