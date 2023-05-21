@@ -12,11 +12,41 @@ export type BoardPosition = 0 | 1 | 2 | 3;
  * Headless, so it can be used without rendering, e.g. for AI.
  */
 export class AbstractBoard {
-    private state: BoardState;
+    /**
+     * Matrix [x][y][z]
+     * [0][0] = bottom left of board
+     * z = perpendicular to board
+     */
+    private state: BoardState = [
+        [
+            [null, null, null, null],
+            [null, null, null, null],
+            [null, null, null, null],
+            [null, null, null, null],
+        ],
+        [
+            [null, null, null, null],
+            [null, null, null, null],
+            [null, null, null, null],
+            [null, null, null, null],
+        ],
+        [
+            [null, null, null, null],
+            [null, null, null, null],
+            [null, null, null, null],
+            [null, null, null, null],
+        ],
+        [
+            [null, null, null, null],
+            [null, null, null, null],
+            [null, null, null, null],
+            [null, null, null, null],
+        ],
+    ];
 
     canStack(x: BoardPosition, y: BoardPosition): boolean {
         const topOfColumnZ = 3;
-        return this.getCell(x, y, topOfColumnZ) !== null; // Each column is a stack, so there can't be gaps
+        return this.getCell(x, y, topOfColumnZ) === null; // Each column is a stack, so there can't be gaps
     }
 
     stack(
@@ -26,35 +56,42 @@ export class AbstractBoard {
         if (!this.canStack(position.x, position.y)) {
             throw new Error("Can't stack fully stacked column");
         }
-        const { content, height } = this.getHighest(position.x, position.y);
-        const z: BoardPosition = (height + (content ? 1 : 0)) as never;
+        const z: BoardPosition = this.getStackHeight(position);
         this.setCell({ ...position, z }, piece);
     }
 
     getCell(x: BoardPosition, y: BoardPosition, z: BoardPosition): BoardCell {
-        return this.state[y][x][z];
+        return this.state[x][y][z];
+    }
+
+    public getStackHeight(position: {
+        x: BoardPosition;
+        y: BoardPosition;
+    }): BoardPosition {
+        const { height } = this.getHighest(position.x, position.y);
+        return height;
     }
 
     private setCell(
         position: { x: BoardPosition; y: BoardPosition; z: BoardPosition },
         content: BoardCell,
     ): void {
-        if (this.state[position.y][position.x][position.z] !== null) {
+        if (this.state[position.x][position.y][position.z] !== null) {
             throw new Error('Tried to overwrite a non-empty cell');
         }
-        this.state[position.y][position.x][position.z] = content;
+        this.state[position.x][position.y][position.z] = content;
     }
 
     private getHighest(
         x: BoardPosition,
         y: BoardPosition,
     ): { content: BoardCell; height: BoardPosition } {
-        const column = this.state[y][x];
-        const reversed = column.reverse();
+        const column = this.state[x][y];
+        const reversed = [...column].reverse();
         const index = reversed.findIndex((c) => c !== null);
         if (index === -1) {
             return { content: null, height: 0 };
         }
-        return { content: reversed[index], height: (4 - index - 1) as never };
+        return { content: reversed[index], height: (4 - index) as never };
     }
 }
