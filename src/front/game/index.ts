@@ -3,7 +3,6 @@ import { Box } from '../engine/gfx/renderable/box';
 import { OrbitIo } from '../engine/io/orbit';
 import { Pointer } from '../engine/io/pointer';
 import { Raycaster } from '../engine/io/raycaster';
-import { Vector } from '../engine/math/vector';
 import { BoardPosition } from './board/abstract-board';
 import { Board } from './board/board';
 import { Cross } from './piece/cross';
