@@ -1,4 +1,4 @@
-import { Object3D, Group as ThreeGroup } from 'three';
+import { Object3D, Scene, Group as ThreeGroup } from 'three';
 import { Renderable } from './interface';
 import { RendererContext } from '../context';
 import { Vector } from '../../math/vector';
@@ -7,9 +7,15 @@ import { VectorInternalAdapter } from '../../math/vector-internal-adapter';
 export class Group {
     private group = new ThreeGroup();
     private renderables: Renderable[] = [];
+    private internalScene: Scene;
 
     registerRenderer(context: RendererContext): void {
-        context.scene.getInternal().add(this.group);
+        this.internalScene = context.scene.getInternal();
+        this.internalScene.add(this.group);
+    }
+
+    destroy(): void {
+        this.internalScene.remove(this.group);
     }
 
     add(renderable: Renderable): void {

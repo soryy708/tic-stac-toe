@@ -1,7 +1,7 @@
 import {
     Mesh,
     MeshLambertMaterial,
-    RingGeometry,
+    Scene,
     TorusGeometry,
     Vector3,
 } from 'three';
@@ -18,6 +18,7 @@ type Dimensions = {
 export class Torus implements Renderable {
     private mesh: Mesh;
     private material = new MeshLambertMaterial({ color: 0xffffff });
+    private internalScene: Scene;
 
     constructor(dimensions: Dimensions) {
         const geometry = new TorusGeometry(
@@ -30,7 +31,12 @@ export class Torus implements Renderable {
     }
 
     registerRenderer(context: RendererContext): void {
-        context.scene.getInternal().add(this.mesh);
+        this.internalScene = context.scene.getInternal();
+        this.internalScene.add(this.mesh);
+    }
+
+    destroy() {
+        this.internalScene.remove(this.mesh);
     }
 
     setColor(rgb: { r: number; g: number; b: number }): void {

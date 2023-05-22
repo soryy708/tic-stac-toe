@@ -73,6 +73,20 @@ export class AbstractBoard {
         return this.state[x][y][z];
     }
 
+    public getAllPieces(): Array<GamePiece> {
+        return this.getStateAsFlat().filter((piece) => piece !== null);
+    }
+
+    public clear(): void {
+        for (let x = 0; x < 4; ++x) {
+            for (let y = 0; y < 4; ++y) {
+                for (let z = 0; z < 4; ++z) {
+                    this.state[x][y][z] = null;
+                }
+            }
+        }
+    }
+
     private isOutOfBounds(scalar: number): boolean {
         return scalar < 0 || scalar > 3;
     }
@@ -106,5 +120,11 @@ export class AbstractBoard {
             return { content: null, height: 0 };
         }
         return { content: reversed[index], height: (4 - index) as never };
+    }
+
+    private getStateAsFlat(): Array<GamePiece> {
+        return this.state
+            .reduce((prev, cur) => [...prev, ...cur] as never)
+            .reduce((prev, cur) => [...prev, ...cur] as never);
     }
 }

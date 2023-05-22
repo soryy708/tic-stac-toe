@@ -7,6 +7,10 @@ class TestPiece implements GamePiece {
         // nop
     }
 
+    destroy() {
+        // nop
+    }
+
     isSameTypeAs(other: GamePiece): boolean {
         return other instanceof TestPiece;
     }
@@ -14,6 +18,10 @@ class TestPiece implements GamePiece {
 
 class TestPiece2 implements GamePiece {
     bootstrap() {
+        // nop
+    }
+
+    destroy() {
         // nop
     }
 

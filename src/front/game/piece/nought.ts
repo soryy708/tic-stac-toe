@@ -39,6 +39,10 @@ export class Nought implements GamePiece {
         this.ring.registerRenderer(engine.getRendererContext());
     }
 
+    destroy(): void {
+        this.ring.destroy();
+    }
+
     isSameTypeAs(other: GamePiece): boolean {
         return other instanceof Nought;
     }

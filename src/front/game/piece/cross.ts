@@ -45,6 +45,10 @@ export class Cross implements GamePiece {
         this.group.registerRenderer(engine.getRendererContext());
     }
 
+    destroy() {
+        this.group.destroy();
+    }
+
     isSameTypeAs(other: GamePiece): boolean {
         return other instanceof Cross;
     }

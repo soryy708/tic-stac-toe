@@ -106,7 +106,10 @@ export class Game {
     }
 
     private reset() {
-        // TODO: Set current player
-        // TODO: Clear the board
+        this.currentPlayer = 'player1';
+
+        const allPieces = this.board.getAllPieces();
+        this.board.clear();
+        allPieces.forEach((piece) => piece.destroy());
     }
 }

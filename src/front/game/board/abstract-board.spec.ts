@@ -7,7 +7,11 @@ class TestingPiece implements GamePiece {
         // nop
     }
 
-    isSameTypeAs(other: GamePiece): boolean {
+    destroy(): void {
+        // nop
+    }
+
+    isSameTypeAs(_other: GamePiece): boolean {
         return false;
     }
 }
