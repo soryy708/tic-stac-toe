@@ -95,6 +95,10 @@
         "import/extensions": "error",
         "import/newline-after-import": "error",
         "import/no-unassigned-import": "error",
-        "@typescript-eslint/no-var-requires": "off"
+        "@typescript-eslint/no-var-requires": "off",
+        "@typescript-eslint/no-unused-vars": [
+            "error",
+            { "argsIgnorePattern": "^_" }
+        ]
     }
 }
