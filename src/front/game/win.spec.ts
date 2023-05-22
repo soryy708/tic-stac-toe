@@ -123,6 +123,18 @@ describe('Win checker unit tests', () => {
             });
         });
 
+        describe('When constant z diagonal of same type', () => {
+            const board = new AbstractBoard();
+            const winChecker = new WinChecker(board);
+            board.stack({ x: 0, y: 0 }, new TestPiece());
+            board.stack({ x: 1, y: 1 }, new TestPiece());
+            board.stack({ x: 2, y: 2 }, new TestPiece());
+            board.stack({ x: 3, y: 3 }, new TestPiece());
+
+            const actual = winChecker.getWinner();
+            expect(actual).toBeTruthy();
+        });
+
         describe('When internal ascending diagonal of same type', () => {
             it('Should return a winner', () => {
                 const board = new AbstractBoard();

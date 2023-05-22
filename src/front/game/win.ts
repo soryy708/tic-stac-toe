@@ -70,6 +70,8 @@ export class WinChecker {
 
     private getDiagonals(): Array<PotentialWin> {
         return flat([
+            this.getDiagonalsOfVector(1, 1, 0),
+            this.getDiagonalsOfVector(1, -1, 0),
             this.getDiagonalsOfVector(1, 0, 1),
             this.getDiagonalsOfVector(1, 0, -1),
             this.getDiagonalsOfVector(0, 1, 1),
@@ -85,11 +87,12 @@ export class WinChecker {
     ): Array<PotentialWin> {
         const zeroToThree = [0, 1, 2, 3] as const;
         return zeroToThree.map((i) => {
-            const perpendicularX = y !== 0 ? 1 : 0;
-            const perpendicularY = x !== 0 ? 1 : 0;
+            const perpendicularX = x === 0 ? 1 : 0;
+            const perpendicularY = y === 0 ? 1 : 0;
+            const perpendicularZ = z === 0 ? 1 : 0;
             const xStart = (x < 0 ? 3 : 0) + i * perpendicularX;
             const yStart = (y < 0 ? 3 : 0) + i * perpendicularY;
-            const zStart = z < 0 ? 3 : 0;
+            const zStart = (z < 0 ? 3 : 0) + i * perpendicularZ;
             return zeroToThree.map((j) =>
                 this.board.getCell(
                     (xStart + j * x) as never,
