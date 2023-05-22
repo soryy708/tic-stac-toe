@@ -61,7 +61,20 @@ export class AbstractBoard {
     }
 
     getCell(x: BoardPosition, y: BoardPosition, z: BoardPosition): BoardCell {
+        if (
+            this.isOutOfBounds(x) ||
+            this.isOutOfBounds(y) ||
+            this.isOutOfBounds(z)
+        ) {
+            throw new Error(
+                `Attempt to get cell at (${x},${y},${z}) out of bounds`,
+            );
+        }
         return this.state[x][y][z];
+    }
+
+    private isOutOfBounds(scalar: number): boolean {
+        return scalar < 0 || scalar > 3;
     }
 
     public getStackHeight(position: {
