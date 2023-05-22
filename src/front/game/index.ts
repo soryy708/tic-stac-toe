@@ -9,6 +9,7 @@ import { Cross } from './piece/cross';
 import { Nought } from './piece/nought';
 import { GamePiece } from './piece/interface';
 import { WinChecker } from './win';
+import { showMessageBar } from './message-bar';
 
 type Player = 'player1' | 'player2';
 
@@ -93,7 +94,7 @@ export class Game {
     private advanceTurn(): void {
         const win = this.winChecker.getWinner();
         if (win) {
-            console.log(`${this.currentPlayer} wins`);
+            showMessageBar(`${this.currentPlayer} wins!`);
             this.reset();
             return;
         }
