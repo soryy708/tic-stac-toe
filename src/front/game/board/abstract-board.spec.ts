@@ -6,6 +6,10 @@ class TestingPiece implements GamePiece {
     bootstrap(_engine: Engine): void {
         // nop
     }
+
+    isSameTypeAs(other: GamePiece): boolean {
+        return false;
+    }
 }
 
 describe('Board unit tests', () => {
