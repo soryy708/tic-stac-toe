@@ -67,7 +67,6 @@
         "no-shadow": "warn",
         "no-shadow-restricted-names": "error",
         "no-undef": "error",
-        "no-use-before-define": "error",
         "no-buffer-constructor": "error",
         "no-path-concat": "error",
         "no-sync": "warn",
