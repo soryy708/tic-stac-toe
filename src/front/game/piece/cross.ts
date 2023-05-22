@@ -44,4 +44,8 @@ export class Cross implements GamePiece {
     bootstrap(engine: Engine): void {
         this.group.registerRenderer(engine.getRendererContext());
     }
+
+    isSameTypeAs(other: GamePiece): boolean {
+        return other instanceof Cross;
+    }
 }

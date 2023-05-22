@@ -38,4 +38,8 @@ export class Nought implements GamePiece {
     bootstrap(engine: Engine): void {
         this.ring.registerRenderer(engine.getRendererContext());
     }
+
+    isSameTypeAs(other: GamePiece): boolean {
+        return other instanceof Nought;
+    }
 }

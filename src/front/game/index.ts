@@ -9,6 +9,7 @@ import { Board } from './board/board';
 import { Cross } from './piece/cross';
 import { Nought } from './piece/nought';
 import { GamePiece } from './piece/interface';
+import { WinChecker } from './win';
 
 type Player = 'player1' | 'player2';
 
@@ -20,6 +21,7 @@ export class Game {
     private raycaster: Raycaster;
     private pointer: Pointer;
     private boardPosition: { x: BoardPosition; y: BoardPosition } = null;
+    private winChecker: WinChecker;
 
     constructor(private engine: Engine) {}
 
@@ -35,8 +37,8 @@ export class Game {
         this.cursor.registerRenderer(this.engine.getRendererContext());
         this.orbitIo = new OrbitIo(this.engine);
         this.orbitIo.setTarget(this.board.getCenter());
-
         this.pointer.onClick(() => this.onClick());
+        this.winChecker = new WinChecker(this.board);
     }
 
     tick(_deltaTime: number) {
@@ -90,10 +92,22 @@ export class Game {
     }
 
     private advanceTurn(): void {
+        const win = this.winChecker.getWinner();
+        if (win) {
+            console.log(`${this.currentPlayer} wins`);
+            this.reset();
+            return;
+        }
+
         if (this.currentPlayer === 'player1') {
             this.currentPlayer = 'player2';
         } else {
             this.currentPlayer = 'player1';
         }
+    }
+
+    private reset() {
+        // TODO: Set current player
+        // TODO: Clear the board
     }
 }
