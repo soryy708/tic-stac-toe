@@ -10,6 +10,7 @@ import { Nought } from './piece/nought';
 import { GamePiece } from './piece/interface';
 import { WinChecker } from './win';
 import { showMessageBar } from './message-bar';
+import { Vector } from '../engine/math/vector';
 
 type Player = 'player1' | 'player2';
 
@@ -51,9 +52,19 @@ export class Game {
         y: BoardPosition;
     }): void {
         this.boardPosition = position;
-        this.cursor.show();
-        const coordinates = this.board.getCellWorldCoordinates(position);
-        this.cursor.setPosition(coordinates);
+        if (this.board.canStack(position.x, position.y)) {
+            this.cursor.show();
+            const coordinates = this.board.getCellWorldCoordinates(position);
+
+            const stackHeight = this.board.getStackHeight(position);
+            const zDistance = 2;
+            const zOffset = zDistance * stackHeight;
+            this.cursor.setPosition(
+                coordinates.addVector(new Vector(0, 0, zOffset)),
+            );
+        } else {
+            this.cursor.hide();
+        }
     }
 
     private onBoardLeave() {
