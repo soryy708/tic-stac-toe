@@ -11,6 +11,7 @@ import { GamePiece } from './piece/interface';
 import { WinChecker } from './win';
 import { showMessageBar } from './message-bar';
 import { Vector } from '../engine/math/vector';
+import { AiSolver } from './ai/solver';
 
 type Player = 'player1' | 'player2';
 
@@ -23,6 +24,7 @@ export class Game {
     private pointer: Pointer;
     private boardPosition: { x: BoardPosition; y: BoardPosition } = null;
     private winChecker: WinChecker;
+    private ai: AiSolver;
 
     constructor(private engine: Engine) {}
 
@@ -40,6 +42,7 @@ export class Game {
         this.orbitIo.setTarget(this.board.getCenter());
         this.pointer.onClick(() => this.onClick());
         this.winChecker = new WinChecker(this.board);
+        this.ai = new AiSolver(this.board);
     }
 
     tick(_deltaTime: number) {
@@ -112,9 +115,22 @@ export class Game {
 
         if (this.currentPlayer === 'player1') {
             this.currentPlayer = 'player2';
+            this.playAsAi();
         } else {
             this.currentPlayer = 'player1';
         }
+    }
+
+    private playAsAi(): void {
+        const position = this.ai.solveNextTurn(
+            new Nought({ x: 0, y: 0, z: 0 }),
+        );
+        const piece = this.buildCurrentPlayerPiece({
+            ...position,
+            z: this.board.getStackHeight(position),
+        });
+        this.board.stack(position, piece);
+        this.advanceTurn();
     }
 
     private reset() {
