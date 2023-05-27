@@ -122,15 +122,20 @@ export class Game {
     }
 
     private playAsAi(): void {
+        const sleep = (ms: number) =>
+            new Promise((resolve) => setTimeout(resolve, ms));
+        const sleepPromise = sleep(500);
         const position = this.ai.solveNextTurn(
             new Nought({ x: 0, y: 0, z: 0 }),
         );
-        const piece = this.buildCurrentPlayerPiece({
-            ...position,
-            z: this.board.getStackHeight(position),
+        sleepPromise.then(() => {
+            const piece = this.buildCurrentPlayerPiece({
+                ...position,
+                z: this.board.getStackHeight(position),
+            });
+            this.board.stack(position, piece);
+            this.advanceTurn();
         });
-        this.board.stack(position, piece);
-        this.advanceTurn();
     }
 
     private reset() {
