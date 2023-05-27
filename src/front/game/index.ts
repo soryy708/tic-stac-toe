@@ -76,7 +76,7 @@ export class Game {
     }
 
     private onClick() {
-        if (!this.boardPosition) {
+        if (!this.boardPosition || this.currentPlayer === 'player2') {
             return;
         }
 
