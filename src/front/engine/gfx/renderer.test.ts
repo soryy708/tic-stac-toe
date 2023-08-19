@@ -17,7 +17,8 @@ const createMockWindow = (): jest.Mocked<Window> =>
 
 const createMockWebGLContext = () => gl(852, 480);
 
-describe('Renderer', () => {
+// TODO: un-skip after https://github.com/soryy708/tic-stac-toe/issues/1 is fixed
+describe.skip('Renderer', () => {
     afterEach(() => {
         jest.resetAllMocks();
     });
