@@ -127,6 +127,7 @@ export class Game {
         const sleepPromise = sleep(500);
         const position = this.ai.solveNextTurn(
             new Nought({ x: 0, y: 0, z: 0 }),
+            new Cross({ x: 0, y: 0, z: 0 }),
         );
         sleepPromise.then(() => {
             const piece = this.buildCurrentPlayerPiece({

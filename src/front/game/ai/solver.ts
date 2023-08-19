@@ -1,13 +1,30 @@
 import { BoardPosition } from '../board/abstract-board';
 import { Board } from '../board/board';
 import { GamePiece } from '../piece/interface';
+import { Evaluator } from './evaluator';
 
 export class AiSolver {
+    private evaluator = new Evaluator();
+
     constructor(private board: Board) {}
 
-    solveNextTurn(_piece: GamePiece): { x: BoardPosition; y: BoardPosition } {
+    solveNextTurn(
+        identity: GamePiece,
+        opponent: GamePiece,
+    ): { x: BoardPosition; y: BoardPosition } {
         const allValid = this.getAllValidPlays(this.board);
-        return allValid[Math.floor(Math.random() * allValid.length)];
+        const playValues = allValid.map((play) =>
+            this.evaluator.evaluate(this.board, play, identity, opponent),
+        );
+        const maxValue = playValues.reduce(
+            (prev, cur) => (cur >= prev ? cur : prev),
+            -Infinity,
+        );
+        if (maxValue === 0) {
+            return allValid[Math.floor(Math.random() * allValid.length)];
+        }
+        const maxValueIndex = playValues.findIndex((v) => v === maxValue);
+        return allValid[maxValueIndex];
     }
 
     private getAllValidPlays(

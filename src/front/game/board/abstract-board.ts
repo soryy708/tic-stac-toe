@@ -99,6 +99,18 @@ export class AbstractBoard {
         return height;
     }
 
+    public clone(): AbstractBoard {
+        const newBoard = new AbstractBoard();
+        for (let x = 0; x < 4; ++x) {
+            for (let y = 0; y < 4; ++y) {
+                for (let z = 0; z < 4; ++z) {
+                    newBoard.state[x][y][z] = this.state[x][y][z];
+                }
+            }
+        }
+        return newBoard;
+    }
+
     private setCell(
         position: { x: BoardPosition; y: BoardPosition; z: BoardPosition },
         content: BoardCell,
